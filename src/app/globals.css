@@ -1,26 +1,214 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-navy-950: #04080F;
+  --color-navy-900: #070E1A;
+  --color-navy-800: #0D1829;
+  --color-navy-700: #162236;
+  --color-navy-600: #1E3A5F;
+  --color-blue-brand: #1463FF;
+  --color-blue-light: #4A90FF;
+  --color-gold: #F0A500;
+  --color-gold-light: #F5BC42;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: #1463FF #0D1829;
 }
+
+body {
+  background-color: #070E1A;
+  color: #ffffff;
+  font-family: var(--font-rubik), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  overflow-x: hidden;
+}
+
+input[type="text"], input[type="email"], textarea {
+  direction: rtl;
+}
+
+/* Force-center all text in the main content sections */
+#stats h1, #stats h2, #stats h3, #stats h4, #stats p, #stats span, #stats div,
+#about h1, #about h2, #about h3, #about h4, #about p, #about span,
+#subsidiaries h1, #subsidiaries h2, #subsidiaries h3, #subsidiaries h4, #subsidiaries p, #subsidiaries span,
+#news h1, #news h2, #news h4, #news span {
+  text-align: center !important;
+}
+
+/* News card body text — right-aligned (natural Hebrew direction) */
+.news-card-body h3,
+.news-card-body p {
+  text-align: right !important;
+  direction: rtl;
+}
+
+
+/* Grid background pattern */
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(20, 99, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(20, 99, 255, 0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* Glow effects */
+.glow-blue {
+  box-shadow: 0 0 40px rgba(20, 99, 255, 0.25), 0 0 80px rgba(20, 99, 255, 0.1);
+}
+
+.glow-gold {
+  box-shadow: 0 0 40px rgba(240, 165, 0, 0.25);
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #ffffff 0%, #4A90FF 50%, #F0A500 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-blue {
+  background: linear-gradient(135deg, #4A90FF 0%, #1463FF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glass card */
+.glass-card {
+  background: rgba(13, 24, 41, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.glass-card:hover {
+  border-color: rgba(20, 99, 255, 0.3);
+  background: rgba(22, 34, 54, 0.8);
+}
+
+/* Animated gradient border */
+@keyframes borderGlow {
+  0%, 100% { border-color: rgba(20, 99, 255, 0.3); }
+  50% { border-color: rgba(240, 165, 0, 0.3); }
+}
+
+/* Floating animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+.float-slow { animation: float 6s ease-in-out infinite; }
+.float-medium { animation: float 4s ease-in-out infinite; }
+
+/* Pulse glow */
+@keyframes pulseGlow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+/* Noise texture overlay */
+.noise::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* Section reveal */
+.section-fade {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.section-fade.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== LIGHT MODE ===== */
+html.light {
+  color-scheme: light;
+  --color-navy-950: #f5f8ff;
+  --color-navy-900: #ecf1ff;
+  --color-navy-800: #e0e9ff;
+  --color-navy-700: #cdd8ff;
+  --color-navy-600: #b0c4ff;
+}
+
+html.light body {
+  background-color: #ecf1ff;
+  color: #04080F;
+}
+
+/* text-white/* → dark navy */
+html.light .text-white          { color: #04080F !important; }
+html.light .text-white\/90      { color: rgba(4,8,15,.9)  !important; }
+html.light .text-white\/80      { color: rgba(4,8,15,.8)  !important; }
+html.light .text-white\/70      { color: rgba(4,8,15,.7)  !important; }
+html.light .text-white\/60      { color: rgba(4,8,15,.6)  !important; }
+html.light .text-white\/50      { color: rgba(4,8,15,.5)  !important; }
+html.light .text-white\/45      { color: rgba(4,8,15,.45) !important; }
+html.light .text-white\/40      { color: rgba(4,8,15,.4)  !important; }
+html.light .text-white\/35      { color: rgba(4,8,15,.35) !important; }
+html.light .text-white\/30      { color: rgba(4,8,15,.3)  !important; }
+html.light .text-white\/25      { color: rgba(4,8,15,.25) !important; }
+html.light .text-white\/20      { color: rgba(4,8,15,.2)  !important; }
+html.light .text-white\/15      { color: rgba(4,8,15,.15) !important; }
+html.light .text-white\/10      { color: rgba(4,8,15,.10) !important; }
+
+/* Borders */
+html.light [class*="border-white"] { border-color: rgba(4,8,15,.12) !important; }
+
+/* Placeholders */
+html.light ::placeholder { color: rgba(4,8,15,.3) !important; }
+
+/* Form inputs */
+html.light input,
+html.light textarea {
+  background: rgba(255,255,255,.9) !important;
+  color: #04080F !important;
+}
+
+/* Glass cards */
+html.light .glass-card {
+  background: rgba(255,255,255,.8) !important;
+  border-color: rgba(20,99,255,.12) !important;
+}
+html.light .glass-card:hover {
+  background: rgba(255,255,255,.95) !important;
+  border-color: rgba(20,99,255,.3) !important;
+}
+
+/* Gradient text — swap white start to dark navy */
+html.light .gradient-text {
+  background: linear-gradient(135deg, #04080F 0%, #1463FF 50%, #F0A500 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Grid background — slightly more visible on light */
+html.light .bg-grid {
+  background-image:
+    linear-gradient(rgba(20,99,255,.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(20,99,255,.07) 1px, transparent 1px);
+}
+
+/* Tone down particle canvas */
+html.light canvas { opacity: .2; }
